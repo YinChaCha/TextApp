@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.administrator.textmyapp.MainActivity;
 import com.example.administrator.textmyapp.R;
-import com.hyphenate.chat.EMClient;
 
 /**
  * Created by Administrator on 2017/3/22.
@@ -21,41 +19,30 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-
+        setContentView(R.layout.split_activity);
         start();
-
-
     }
-
     private void start() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                if (EMClient.getInstance().isLoggedInBefore()) {
-                    EMClient.getInstance().chatManager().loadAllConversations();
-                    EMClient.getInstance().groupManager().loadAllGroups();
-                    if (sleep == 2000) {
-                        try {
-                            Thread.sleep(sleep);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
-                } else {
+                if (sleep == 2000) {
                     try {
                         Thread.sleep(sleep);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Intent intent1 = new Intent(context, LoginActivity.class);
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent1 = new Intent(context, RegisterActivity.class);
                     startActivity(intent1);
                 }
-
             }
+
         }).start();
     }
 }
+
+
